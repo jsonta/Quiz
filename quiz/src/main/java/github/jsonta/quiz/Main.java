@@ -1,21 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package github.jsonta.quiz;
+import javax.swing.JDialog;
 
-import javax.swing.JOptionPane;
-
-/**
- *
- * @author Jakub
- */
 public class Main extends javax.swing.JFrame {
-
-    /**
-     * Creates new form Main
-     */
     public Main() {
         initComponents();
     }
@@ -136,18 +122,24 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "unimplemented");
+        Login loginOp = new Login();
+        loginOp.start();
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void signupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupButtonActionPerformed
-        // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "unimplemented");
+        JDialog rgstrDialog = new JDialog(this, "Rejestracja", true);
+        Register rgstrPanel = new Register();
+        rgstrDialog.getContentPane().add(rgstrPanel);
+        rgstrDialog.pack();
+        rgstrDialog.setVisible(true);
     }//GEN-LAST:event_signupButtonActionPerformed
 
     private void pwdRstButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pwdRstButtonActionPerformed
-        // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "unimplemented");
+        JDialog pwdRstDialog = new JDialog(this, "Resetowanie hasła", true);
+        PasswdReset pwdRstPanel = new PasswdReset();
+        pwdRstDialog.getContentPane().add(pwdRstPanel);
+        pwdRstDialog.pack();
+        pwdRstDialog.setVisible(true);
     }//GEN-LAST:event_pwdRstButtonActionPerformed
 
     /**
