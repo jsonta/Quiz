@@ -1,8 +1,8 @@
 package github.jsonta.quiz;
 import javax.swing.JOptionPane;
 
-public class PasswdReset extends javax.swing.JPanel {
-    public PasswdReset() {
+public class PasswdResetFrame extends javax.swing.JPanel {
+    public PasswdResetFrame() {
         initComponents();
     }
 
@@ -56,19 +56,23 @@ public class PasswdReset extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void requestPwdRstBttnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestPwdRstBttnActionPerformed
-        // TODO add your handling code here:
-        RequestPwdReset req = new RequestPwdReset();
-        req.start();
-    }//GEN-LAST:event_requestPwdRstBttnActionPerformed
-
-    private class RequestPwdReset extends Thread {
-        public RequestPwdReset(){}
-    
-        @Override
-        public void run() {
-            JOptionPane.showMessageDialog(null, "unimplemented");
+        PasswdResetThread thread;
+        emailTextField.setEnabled(false);
+        if (!emailTextField.getText().equals("")) {
+            thread = new PasswdResetThread(emailTextField.getText());
+            thread.start();
+            try {
+                thread.join();
+            } catch (InterruptedException e) {}
+            
+            if (thread.didRequestSend()) {
+                JOptionPane.showMessageDialog(null, "Żądanie resetowania hasła zostało wysłane. Sprawdź swoją skrzynkę odbiorczą.", "Komunikat", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Proszę podać adres e-mail przypisany do konta, którego hasło chcesz zresetować.", "Komunikat", JOptionPane.ERROR_MESSAGE);
         }
-    }
+        emailTextField.setEnabled(true);
+    }//GEN-LAST:event_requestPwdRstBttnActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField emailTextField;
