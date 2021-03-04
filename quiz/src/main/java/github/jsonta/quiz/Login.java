@@ -25,7 +25,7 @@ public class Login {
         this.paswd = p;
     }
     
-    public void executeLogin() {
+    public void logUserIn() {
         thread = new LoginThread(email, paswd);
         thread.start();
         try {
@@ -35,6 +35,11 @@ public class Login {
         pcs.firePropertyChange("userLoggedIn", loggedIn, thread.getLoggedIn());
         this.loggedIn = thread.getLoggedIn();
         this.status = thread.getStatus();
+    }
+    
+    public void logUserOut() {
+        pcs.firePropertyChange("userLoggedOut", loggedIn, false);
+        this.loggedIn = false;
     }
     
     public boolean getLoggedIn() {
