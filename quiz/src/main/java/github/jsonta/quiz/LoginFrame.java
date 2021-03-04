@@ -26,7 +26,7 @@ public class LoginFrame extends javax.swing.JFrame {
         signupButton = new javax.swing.JButton();
         pwdRstButton = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quiz");
         setResizable(false);
 
