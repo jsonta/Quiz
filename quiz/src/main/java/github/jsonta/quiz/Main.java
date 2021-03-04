@@ -22,16 +22,25 @@ public class Main implements PropertyChangeListener {
         
         menuFrame = new MenuFrame();
         loginFrame = new LoginFrame();
-        loginObj = new Login();
         
+        loginObj = new Login();
         loginObj.addPropertyChangeListener(listener);
+        
         loginFrame.setLoginObj(loginObj);
-        loginFrame.setVisible(true);    
+        menuFrame.setLoginObj(loginObj);
+        loginFrame.setVisible(true);
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        loginFrame.dispose();
-        menuFrame.setVisible(true);
+        if (evt.getPropertyName().equals("userLoggedIn")) {
+            loginFrame.dispose();
+            menuFrame.setVisible(true);
+        }
+        
+        if (evt.getPropertyName().equals("userLoggedOut")) {
+            menuFrame.dispose();
+            loginFrame.setVisible(true);
+        }
     }
 }
