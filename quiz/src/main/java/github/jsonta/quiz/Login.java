@@ -3,7 +3,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class Login {
-    private String email, paswd, status;
+    private String email, paswd, status, token;
     private boolean loggedIn = false;
     private LoginThread thread;
     private final PropertyChangeSupport pcs;
@@ -34,7 +34,11 @@ public class Login {
         
         pcs.firePropertyChange("userLoggedIn", loggedIn, thread.getLoggedIn());
         this.loggedIn = thread.getLoggedIn();
-        this.status = thread.getStatus();
+        
+        if (this.loggedIn)
+            this.token = thread.getToken();
+        else
+            this.status = thread.getStatus();
     }
     
     public void logUserOut() {
@@ -48,5 +52,9 @@ public class Login {
     
     public String getStatus() {
         return status;
+    }
+    
+    public String getToken() {
+        return token;
     }
 }
