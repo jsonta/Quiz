@@ -4,7 +4,7 @@ import java.beans.PropertyChangeSupport;
 
 public class Login {
     protected LoginThread thread;
-    private String token;
+    private String loggedInUser, token;
     private boolean loggedIn = false;
     private final PropertyChangeSupport pcs;
     
@@ -23,7 +23,11 @@ public class Login {
     public boolean getLoggedIn() {
         return loggedIn;
     }
-        
+     
+    public String getLoggedInUser() {
+        return loggedInUser;
+    }
+    
     public String getToken() {
         return token;
     }
@@ -32,8 +36,14 @@ public class Login {
         pcs.firePropertyChange("setLoggedIn", loggedIn, b);
         loggedIn = b;
         
-        if (!loggedIn)
+        if (!loggedIn) {
             token = null;
+            loggedInUser = null;
+        }
+    }
+    
+    public void setLoggedInUser(String s) {
+        loggedInUser = s;
     }
     
     public void setToken(String s) {
