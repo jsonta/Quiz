@@ -1,9 +1,13 @@
 package github.jsonta.quiz;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import javax.swing.JFrame;
 
-public class MenuFrame extends javax.swing.JFrame {
+public class MenuFrame extends JFrame implements WindowListener {
     private Login loginObj;
     public MenuFrame() {
         initComponents();
+        this.addWindowListener(this);
     }
 
     /**
@@ -15,6 +19,8 @@ public class MenuFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        loggedInUserLabel = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         logoutMenuItem = new javax.swing.JMenuItem();
@@ -26,6 +32,11 @@ public class MenuFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quiz");
         setResizable(false);
+
+        jLabel1.setText("Jesteś zalogowany jako");
+
+        loggedInUserLabel.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        loggedInUserLabel.setText("(logged in user's e-mail address)");
 
         jMenu1.setText("Sesja");
 
@@ -61,18 +72,28 @@ public class MenuFrame extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel1)
+                    .addComponent(loggedInUserLabel))
+                .addContainerGap(132, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 278, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(loggedInUserLabel)
+                .addContainerGap(225, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void logoutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutMenuItemActionPerformed
-        loginObj.logUserOut();
+        loginObj.setLoggedIn(false);
     }//GEN-LAST:event_logoutMenuItemActionPerformed
 
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
@@ -96,10 +117,45 @@ public class MenuFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem delAccMenuItem;
     private javax.swing.JMenuItem exitMenuItem;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JLabel loggedInUserLabel;
     private javax.swing.JMenuItem logoutMenuItem;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+        loggedInUserLabel.setText(loginObj.getLoggedInUser());
+        /*
+        System.out.println("User logged in: "+loginObj.getLoggedIn());
+        System.out.println("User token: "+loginObj.getToken());
+        */
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {}
+
+    @Override
+    public void windowClosed(WindowEvent e) {}
+
+    @Override
+    public void windowIconified(WindowEvent e) {}
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {}
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        loggedInUserLabel.setText(loginObj.getLoggedInUser());
+        /*
+        System.out.println("User logged in: "+loginObj.getLoggedIn());
+        System.out.println("User token: "+loginObj.getToken());
+        */
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {}
 }

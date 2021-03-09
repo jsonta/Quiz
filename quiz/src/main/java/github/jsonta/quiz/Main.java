@@ -33,14 +33,14 @@ public class Main implements PropertyChangeListener {
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (evt.getPropertyName().equals("userLoggedIn")) {
-            loginFrame.dispose();
-            menuFrame.setVisible(true);
-        }
-        
-        if (evt.getPropertyName().equals("userLoggedOut")) {
-            menuFrame.dispose();
-            loginFrame.setVisible(true);
+        if (evt.getPropertyName().equals("setLoggedIn")) {
+            if ((boolean)evt.getNewValue()) {
+                loginFrame.dispose();
+                menuFrame.setVisible(true);
+            } else {
+                menuFrame.dispose();
+                loginFrame.setVisible(true);
+            } 
         }
     }
 }

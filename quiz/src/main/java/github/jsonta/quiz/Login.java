@@ -3,9 +3,9 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class Login {
-    private String email, paswd, status;
+    protected LoginThread thread;
+    private String loggedInUser, token;
     private boolean loggedIn = false;
-    private LoginThread thread;
     private final PropertyChangeSupport pcs;
     
     public Login() {
@@ -20,33 +20,33 @@ public class Login {
         pcs.removePropertyChangeListener(pcl);
     }
     
-    public void setLoginData(String e, String p) {
-        this.email = e;
-        this.paswd = p;
-    }
-    
-    public void logUserIn() {
-        thread = new LoginThread(email, paswd);
-        thread.start();
-        try {
-            thread.join();
-        } catch (InterruptedException e) {}
-        
-        pcs.firePropertyChange("userLoggedIn", loggedIn, thread.getLoggedIn());
-        this.loggedIn = thread.getLoggedIn();
-        this.status = thread.getStatus();
-    }
-    
-    public void logUserOut() {
-        pcs.firePropertyChange("userLoggedOut", loggedIn, false);
-        this.loggedIn = false;
-    }
-    
     public boolean getLoggedIn() {
         return loggedIn;
     }
+     
+    public String getLoggedInUser() {
+        return loggedInUser;
+    }
     
-    public String getStatus() {
-        return status;
+    public String getToken() {
+        return token;
+    }
+    
+    public void setLoggedIn(boolean b) {
+        pcs.firePropertyChange("setLoggedIn", loggedIn, b);
+        loggedIn = b;
+        
+        if (!loggedIn) {
+            token = null;
+            loggedInUser = null;
+        }
+    }
+    
+    public void setLoggedInUser(String s) {
+        loggedInUser = s;
+    }
+    
+    public void setToken(String s) {
+        token = s;
     }
 }

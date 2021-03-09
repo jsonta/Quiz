@@ -1,11 +1,16 @@
 package github.jsonta.quiz;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.*;
 
-public class LoginFrame extends javax.swing.JFrame {    
+public class LoginFrame extends JFrame implements ThreadCompleteListener, WindowListener {    
     private Login loginObj;
+    private final Pattern emailRegex = Pattern.compile("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])");
     public LoginFrame() {
         initComponents();
+        //this.addWindowListener(this);
     }
 
     /**
@@ -122,7 +127,36 @@ public class LoginFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        executeLogin();
+        uiControl(false);
+        boolean emailValid, paswdValid;
+        
+        String email = emailTextField.getText();
+        if (!email.isEmpty()) {
+            Matcher m = emailRegex.matcher(email);
+            emailValid = m.find();
+        } else
+            emailValid = false;
+                
+        String paswd = new String(passwordField.getPassword());
+        paswdValid = paswd.length() >= 6;
+        
+        if (emailValid && paswdValid) {
+            loginObj.thread = new LoginThread(email, paswd);
+            loginObj.thread.setName("User login");
+            loginObj.thread.addListener(this);
+            loginObj.thread.start();
+        } else {
+            String errMsg = "";
+            if (!emailValid && !paswdValid)
+                errMsg = "Nieprawidłowy adres e-mail i hasło.";
+            else if (!emailValid && paswdValid)
+                errMsg = "Nieprawidłowy adres e-mail.";
+            else if (emailValid && !paswdValid)
+                errMsg = "Podane hasło jest za krótkie.";
+            
+            JOptionPane.showMessageDialog(rootPane, errMsg, "Komunikat", JOptionPane.ERROR_MESSAGE);
+            uiControl(true);
+        }
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void signupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupButtonActionPerformed
@@ -150,6 +184,10 @@ public class LoginFrame extends javax.swing.JFrame {
             new LoginFrame().setVisible(true);
         });
     }
+    
+    public void setLoginObj(Login obj) {
+        loginObj = obj;
+    }
 
     private void uiControl(boolean flip) {
         emailTextField.setEnabled(flip);
@@ -159,26 +197,49 @@ public class LoginFrame extends javax.swing.JFrame {
         signupButton.setEnabled(flip);
     }
     
-    public void setLoginObj(Login obj) {
-        loginObj = obj;
-    }
-    
-    private void executeLogin() {
-        String email = emailTextField.getText();
-        String paswd = new String(passwordField.getPassword());
-        uiControl(false);
-        
-        loginObj.setLoginData(email, paswd);
-        loginObj.logUserIn();
-        
-        if (loginObj.getLoggedIn()) {
-            emailTextField.setText("");
-            passwordField.setText("");
-        } else
-            JOptionPane.showMessageDialog(rootPane, loginObj.getStatus(), "Komunikat", JOptionPane.ERROR_MESSAGE);
+    @Override
+    public void notifyOfThreadComplete(Thread t) {
+        if (t.getName().equals("User login")) {
+            boolean userLoggedIn = loginObj.thread.getLoggedIn();
+            
+            if (userLoggedIn) {
+                loginObj.setLoggedIn(userLoggedIn);
+                loginObj.setLoggedInUser(loginObj.thread.getLoggedInUser());
+                loginObj.setToken(loginObj.thread.getToken());
+                emailTextField.setText("");
+                passwordField.setText("");
+            } else
+                JOptionPane.showMessageDialog(rootPane, loginObj.thread.getStatus(), "Komunikat", JOptionPane.ERROR_MESSAGE);
+        }
         
         uiControl(true);
     }
+
+    @Override
+    public void windowOpened(WindowEvent e) {}
+
+    @Override
+    public void windowClosing(WindowEvent e) {}
+
+    @Override
+    public void windowClosed(WindowEvent e) {}
+
+    @Override
+    public void windowIconified(WindowEvent e) {}
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {}
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        /*
+        System.out.println("User logged in: "+loginObj.getLoggedIn());
+        System.out.println("User token: "+loginObj.getToken());
+        */
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {}
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField emailTextField;
