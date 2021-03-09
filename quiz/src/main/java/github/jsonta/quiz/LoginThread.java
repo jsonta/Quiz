@@ -3,7 +3,7 @@ import java.io.*;
 import java.net.*;
 import org.json.JSONObject;
 
-public class LoginThread extends Thread {
+public class LoginThread extends NotifyingThread {
     private volatile String email,paswd,status,token;
     private volatile boolean loggedIn;
     public LoginThread(String e, String p) {
@@ -12,7 +12,7 @@ public class LoginThread extends Thread {
     }
     
     @Override
-    public void run() {
+    public void doRun() {
         JSONObject jsonRsp;
         try {
             URL apiUrl = new URL("https://learnandtest.herokuapp.com/quiz/users/login");
@@ -45,10 +45,8 @@ public class LoginThread extends Thread {
             }
         } catch (MalformedURLException ex) {
             System.out.println(ex.toString());
-            this.interrupt();
         } catch (IOException ex) {
             System.out.println(ex.toString());
-            this.interrupt();
         }
         
         /*

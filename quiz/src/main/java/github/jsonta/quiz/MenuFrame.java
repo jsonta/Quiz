@@ -1,9 +1,13 @@
 package github.jsonta.quiz;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import javax.swing.JFrame;
 
-public class MenuFrame extends javax.swing.JFrame {
+public class MenuFrame extends JFrame implements WindowListener {
     private Login loginObj;
     public MenuFrame() {
         initComponents();
+        this.addWindowListener(this);
     }
 
     /**
@@ -72,7 +76,7 @@ public class MenuFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void logoutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_logoutMenuItemActionPerformed
-        loginObj.logUserOut();
+        loginObj.setLoggedIn(false);
     }//GEN-LAST:event_logoutMenuItemActionPerformed
 
     private void exitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuItemActionPerformed
@@ -102,4 +106,31 @@ public class MenuFrame extends javax.swing.JFrame {
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JMenuItem logoutMenuItem;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void windowOpened(WindowEvent e) {
+        System.out.println("User logged in: "+loginObj.getLoggedIn());
+        System.out.println("User token: "+loginObj.getToken());
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {}
+
+    @Override
+    public void windowClosed(WindowEvent e) {}
+
+    @Override
+    public void windowIconified(WindowEvent e) {}
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {}
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        System.out.println("User logged in: "+loginObj.getLoggedIn());
+        System.out.println("User token: "+loginObj.getToken());
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {}
 }

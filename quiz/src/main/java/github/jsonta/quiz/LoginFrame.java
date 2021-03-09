@@ -1,11 +1,13 @@
 package github.jsonta.quiz;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import javax.swing.*;
 
-public class LoginFrame extends javax.swing.JFrame {    
+public class LoginFrame extends JFrame implements ThreadCompleteListener, WindowListener {    
     private Login loginObj;
     public LoginFrame() {
         initComponents();
+        this.addWindowListener(this);
     }
 
     /**
@@ -122,7 +124,14 @@ public class LoginFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void loginButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginButtonActionPerformed
-        executeLogin();
+        String email = emailTextField.getText();
+        String paswd = new String(passwordField.getPassword());
+        uiControl(false);
+        
+        loginObj.thread = new LoginThread(email, paswd);
+        loginObj.thread.setName("User login");
+        loginObj.thread.addListener(this);
+        loginObj.thread.start();
     }//GEN-LAST:event_loginButtonActionPerformed
 
     private void signupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupButtonActionPerformed
@@ -162,24 +171,7 @@ public class LoginFrame extends javax.swing.JFrame {
     public void setLoginObj(Login obj) {
         loginObj = obj;
     }
-    
-    private void executeLogin() {
-        String email = emailTextField.getText();
-        String paswd = new String(passwordField.getPassword());
-        uiControl(false);
         
-        loginObj.setLoginData(email, paswd);
-        loginObj.logUserIn();
-        
-        if (loginObj.getLoggedIn()) {
-            emailTextField.setText("");
-            passwordField.setText("");
-        } else
-            JOptionPane.showMessageDialog(rootPane, loginObj.getStatus(), "Komunikat", JOptionPane.ERROR_MESSAGE);
-        
-        uiControl(true);
-    }
-    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField emailTextField;
     private javax.swing.JLabel jLabel1;
@@ -190,4 +182,45 @@ public class LoginFrame extends javax.swing.JFrame {
     private javax.swing.JButton pwdRstButton;
     private javax.swing.JButton signupButton;
     // End of variables declaration//GEN-END:variables
+
+    @Override
+    public void notifyOfThreadComplete(Thread t) {
+        if (t.getName().equals("User login")) {
+            boolean userLoggedIn = loginObj.thread.getLoggedIn();
+            
+            if (userLoggedIn) {
+                loginObj.setLoggedIn(userLoggedIn);
+                loginObj.setToken(loginObj.thread.getToken());
+                emailTextField.setText("");
+                passwordField.setText("");
+            } else
+                JOptionPane.showMessageDialog(rootPane, loginObj.thread.getStatus(), "Komunikat", JOptionPane.ERROR_MESSAGE);
+            }
+        
+        uiControl(true);
+    }
+
+    @Override
+    public void windowOpened(WindowEvent e) {}
+
+    @Override
+    public void windowClosing(WindowEvent e) {}
+
+    @Override
+    public void windowClosed(WindowEvent e) {}
+
+    @Override
+    public void windowIconified(WindowEvent e) {}
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {}
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+        System.out.println("User logged in: "+loginObj.getLoggedIn());
+        System.out.println("User token: "+loginObj.getToken());
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {}
 }
