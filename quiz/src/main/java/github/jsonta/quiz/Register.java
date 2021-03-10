@@ -1,10 +1,9 @@
 package github.jsonta.quiz;
-import javax.swing.JOptionPane;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import javax.swing.*;
 
-public class Register extends javax.swing.JPanel {
-    private String email, paswd, sexStr;
-    private boolean fieldsValid, verification;
-    private final StringBuilder invalidField = new StringBuilder();
+public class Register extends JPanel implements ThreadCompleteListener {
     public Register() {
         initComponents();
     }
@@ -141,24 +140,17 @@ public class Register extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void requestRgstrBttnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_requestRgstrBttnActionPerformed
-        RegisterThread thread;
         uiControl(false);
-        validateFields();
         
-        if (fieldsValid) {
-            thread = new RegisterThread(email, paswd, sexStr, verification);
-            thread.start();
-            try {
-                thread.join();
-            } catch (InterruptedException e) {}   
-            
-            if (thread.getRgstrStatus())
-                JOptionPane.showMessageDialog(null, "Rejestracja przebiegła pomyślnie.", "Komunikat", JOptionPane.INFORMATION_MESSAGE);
+        if (validateFields()) {
+            thread = new RegisterThread(email, paswd, genStr, verification);
+            thread.setName("User register");
+            thread.addListener(this);
+            thread.start();    
         } else {
             JOptionPane.showMessageDialog(null, invalidField.toString(), "Komunikat", JOptionPane.ERROR_MESSAGE);
+            uiControl(true);
         }
-        
-        uiControl(true);
     }//GEN-LAST:event_requestRgstrBttnActionPerformed
     
     private void uiControl(boolean flip) {
@@ -171,50 +163,84 @@ public class Register extends javax.swing.JPanel {
         requestRgstrBttn.setEnabled(flip);
     }
     
-    private void validateFields() {
-        boolean emailNotEmpty;
-        boolean paswdNotEmpty = false;
-        fieldsValid = false;
+    private boolean validateFields() {
+        boolean emailValid;
+        boolean paswdValid = false;
         invalidField.delete(0, invalidField.length());
         
         email = emailTextField.getText();
-        if (email.equals("")) {
-            emailNotEmpty = false;
+        if (!email.isEmpty()) {
+            Matcher m = emailRegex.matcher(email);
+            if (m.find())
+                emailValid = true;
+            else {
+                emailValid = false;
+                invalidField.append("Proszę podać poprawny adres e-mail.\n");
+            }
+        } else {
+            emailValid = false;
             invalidField.append("Proszę podać adres e-mail, na który ma zostać założone konto.\n");
-        } else
-            emailNotEmpty = true;
+        }
         
         paswd = new String(passwordField.getPassword());
-        if (paswd.equals("")) {
-            paswdNotEmpty = false;
+        String paswdConfirm = new String(passwordConfirmField.getPassword());
+        if (!paswd.isEmpty()) {
+            if (paswd.length() >= 6) {
+                if (!paswdConfirm.isEmpty()) {
+                    if (paswd.equals(paswdConfirm)) {
+                        Matcher m = paswdRegex.matcher(paswd);
+                        if (m.find())
+                            paswdValid = true;
+                        else {
+                            paswdValid = false;
+                            invalidField.append("Hasło musi zawierać co najmniej jeden (1) znak specjalny.\n");
+                        }
+                    } else {
+                        paswdValid = false;
+                        invalidField.append("Podane hasła nie zgadzają się.\n");
+                    }
+                } else {
+                    paswdValid = false;
+                    invalidField.append("Proszę podać jeszcze raz to samo hasło.\n");
+                }
+            } else {
+                paswdValid = false;
+                invalidField.append("Hasło musi składać się z co najmniej 6 znaków.\n");
+            }
+        } else {
+            paswdValid = false;
             invalidField.append("Proszę podać hasło dla zakładanego konta.\n");
         }
         
-        String paswdConfirm = new String(passwordConfirmField.getPassword());
-        if (paswdConfirm.equals("")) {
-            paswdNotEmpty = false;
-            invalidField.append("Proszę podać jeszcze raz to samo hasło.\n");
-        }
-        
-        if (!paswdNotEmpty && !paswd.equals(paswdConfirm)) {
-            paswdNotEmpty = false;
-            invalidField.append("Podane hasła nie zgadzają się.\n");
-        } else
-            paswdNotEmpty = true;
-        
         if (femaleButton.isSelected())
-            sexStr = "Kobieta";
+            genStr = "Kobieta";
         else if (maleButton.isSelected())
-            sexStr = "Mężczyzna";
+            genStr = "Mężczyzna";
         
         verification = verificationCheckBox.isSelected();
         if (!verification)
             invalidField.append("Proszę potwierdzić, że jesteś człowiekiem.\n");
         
-        if (emailNotEmpty && paswdNotEmpty && verification)
-            fieldsValid = true;
+        if (emailValid && paswdValid && verification)
+            return true;
+        else
+            return false;
     }
     
+    @Override
+    public void notifyOfThreadComplete(Thread t) {
+        if (t.getName().equals("User register")) {
+            JOptionPane.showMessageDialog(null, this.thread.getStatus(), "Komunikat", JOptionPane.PLAIN_MESSAGE);
+            uiControl(true);
+        }
+    }
+    
+    private String email, paswd, genStr;
+    private boolean verification;
+    private final Pattern emailRegex = Pattern.compile("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])");
+    private final Pattern paswdRegex = Pattern.compile("[!@#$%^&*]+");
+    private final StringBuilder invalidField = new StringBuilder();
+    protected RegisterThread thread;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField emailTextField;
     private javax.swing.JRadioButton femaleButton;

@@ -1,16 +1,13 @@
 package github.jsonta.quiz;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.*;
 
-public class LoginFrame extends JFrame implements ThreadCompleteListener, WindowListener {    
+public class LoginFrame extends JFrame implements ThreadCompleteListener {    
     private Login loginObj;
     private final Pattern emailRegex = Pattern.compile("(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|\"(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21\\x23-\\x5b\\x5d-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])*\")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\\x01-\\x08\\x0b\\x0c\\x0e-\\x1f\\x21-\\x5a\\x53-\\x7f]|\\\\[\\x01-\\x09\\x0b\\x0c\\x0e-\\x7f])+)\\])");
     public LoginFrame() {
         initComponents();
-        //this.addWindowListener(this);
     }
 
     /**
@@ -214,32 +211,6 @@ public class LoginFrame extends JFrame implements ThreadCompleteListener, Window
         
         uiControl(true);
     }
-
-    @Override
-    public void windowOpened(WindowEvent e) {}
-
-    @Override
-    public void windowClosing(WindowEvent e) {}
-
-    @Override
-    public void windowClosed(WindowEvent e) {}
-
-    @Override
-    public void windowIconified(WindowEvent e) {}
-
-    @Override
-    public void windowDeiconified(WindowEvent e) {}
-
-    @Override
-    public void windowActivated(WindowEvent e) {
-        /*
-        System.out.println("User logged in: "+loginObj.getLoggedIn());
-        System.out.println("User token: "+loginObj.getToken());
-        */
-    }
-
-    @Override
-    public void windowDeactivated(WindowEvent e) {}
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField emailTextField;
