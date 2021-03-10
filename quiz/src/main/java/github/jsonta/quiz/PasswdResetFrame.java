@@ -1,7 +1,9 @@
 package github.jsonta.quiz;
-import javax.swing.JOptionPane;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
+import javax.swing.*;
 
-public class PasswdResetFrame extends javax.swing.JPanel {
+public class PasswdResetFrame extends JPanel implements WindowListener {
     public PasswdResetFrame() {
         initComponents();
     }
@@ -73,6 +75,29 @@ public class PasswdResetFrame extends javax.swing.JPanel {
         }
         emailTextField.setEnabled(true);
     }//GEN-LAST:event_requestPwdRstBttnActionPerformed
+    
+    @Override
+    public void windowOpened(WindowEvent e) {
+        JOptionPane.showMessageDialog(null, "Możliwość resetowania hasła nie została jeszcze zaimplementowana.", "Komunikat", JOptionPane.WARNING_MESSAGE);
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {}
+
+    @Override
+    public void windowClosed(WindowEvent e) {}
+
+    @Override
+    public void windowIconified(WindowEvent e) {}
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {}
+
+    @Override
+    public void windowActivated(WindowEvent e) {}
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {}
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField emailTextField;
