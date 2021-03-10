@@ -3,8 +3,8 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import javax.swing.*;
 
-public class PasswdResetFrame extends JPanel implements WindowListener {
-    public PasswdResetFrame() {
+public class PasswdResetPanel extends JPanel implements WindowListener {
+    public PasswdResetPanel() {
         initComponents();
     }
 

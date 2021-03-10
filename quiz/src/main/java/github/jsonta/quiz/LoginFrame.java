@@ -156,7 +156,7 @@ public class LoginFrame extends JFrame implements ThreadCompleteListener {
 
     private void signupButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupButtonActionPerformed
         JDialog rgstrDialog = new JDialog(this, "Rejestracja", true);
-        RegisterFrame rgstrPanel = new RegisterFrame();
+        RegisterPanel rgstrPanel = new RegisterPanel();
         rgstrDialog.getContentPane().add(rgstrPanel);
         rgstrDialog.pack();
         rgstrDialog.setVisible(true);
@@ -164,7 +164,7 @@ public class LoginFrame extends JFrame implements ThreadCompleteListener {
 
     private void pwdRstButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pwdRstButtonActionPerformed
         JDialog pwdRstDialog = new JDialog(this, "Resetowanie hasła", true);
-        PasswdResetFrame pwdRstPanel = new PasswdResetFrame();
+        PasswdResetPanel pwdRstPanel = new PasswdResetPanel();
         pwdRstDialog.getContentPane().add(pwdRstPanel);
         pwdRstDialog.pack();
         pwdRstDialog.addWindowListener(pwdRstPanel);
