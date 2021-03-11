@@ -1,7 +1,7 @@
 package github.jsonta.quiz;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import javax.swing.JFrame;
+import javax.swing.*;
 
 public class MenuFrame extends JFrame implements WindowListener {
     public MenuFrame() {
@@ -60,6 +60,11 @@ public class MenuFrame extends JFrame implements WindowListener {
         jMenu2.setText("Konto");
 
         delAccMenuItem.setText("Usuń konto");
+        delAccMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                delAccMenuItemActionPerformed(evt);
+            }
+        });
         jMenu2.add(delAccMenuItem);
 
         jMenuBar1.add(jMenu2);
@@ -98,6 +103,16 @@ public class MenuFrame extends JFrame implements WindowListener {
         System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
+    private void delAccMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_delAccMenuItemActionPerformed
+        JDialog delUserDialog = new JDialog(this, "Usuwanie konta", true);
+        DeleteUserPanel delUserPanel = new DeleteUserPanel();
+        delUserPanel.setLoginObj(loginObj);
+        delUserDialog.getContentPane().add(delUserPanel);
+        delUserDialog.pack();
+        delUserDialog.addWindowListener(delUserPanel);
+        delUserDialog.setVisible(true);
+    }//GEN-LAST:event_delAccMenuItemActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -111,14 +126,10 @@ public class MenuFrame extends JFrame implements WindowListener {
     public void setLoginObj(Login obj) {
         loginObj = obj;
     }
-
+    
     @Override
     public void windowOpened(WindowEvent e) {
         loggedInUserLabel.setText(loginObj.getLoggedInUser());
-        /*
-        System.out.println("User logged in: "+loginObj.getLoggedIn());
-        System.out.println("User token: "+loginObj.getToken());
-        */
     }
 
     @Override
@@ -136,10 +147,6 @@ public class MenuFrame extends JFrame implements WindowListener {
     @Override
     public void windowActivated(WindowEvent e) {
         loggedInUserLabel.setText(loginObj.getLoggedInUser());
-        /*
-        System.out.println("User logged in: "+loginObj.getLoggedIn());
-        System.out.println("User token: "+loginObj.getToken());
-        */
     }
 
     @Override
