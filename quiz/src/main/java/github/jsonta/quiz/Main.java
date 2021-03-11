@@ -21,8 +21,9 @@ public class Main implements PropertyChangeListener {
         }
         
         menuFrame = new MenuFrame();
-        loginFrame = new LoginFrame();
+        menuFrame.addWindowListener(menuFrame);
         
+        loginFrame = new LoginFrame();
         loginObj = new Login();
         loginObj.addPropertyChangeListener(listener);
         

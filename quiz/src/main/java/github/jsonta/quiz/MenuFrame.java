@@ -4,10 +4,8 @@ import java.awt.event.WindowListener;
 import javax.swing.JFrame;
 
 public class MenuFrame extends JFrame implements WindowListener {
-    private Login loginObj;
     public MenuFrame() {
         initComponents();
-        this.addWindowListener(this);
     }
 
     /**
@@ -114,18 +112,6 @@ public class MenuFrame extends JFrame implements WindowListener {
         loginObj = obj;
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem delAccMenuItem;
-    private javax.swing.JMenuItem exitMenuItem;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPopupMenu.Separator jSeparator1;
-    private javax.swing.JLabel loggedInUserLabel;
-    private javax.swing.JMenuItem logoutMenuItem;
-    // End of variables declaration//GEN-END:variables
-
     @Override
     public void windowOpened(WindowEvent e) {
         loggedInUserLabel.setText(loginObj.getLoggedInUser());
@@ -158,4 +144,17 @@ public class MenuFrame extends JFrame implements WindowListener {
 
     @Override
     public void windowDeactivated(WindowEvent e) {}
+    
+    private Login loginObj;
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem delAccMenuItem;
+    private javax.swing.JMenuItem exitMenuItem;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPopupMenu.Separator jSeparator1;
+    private javax.swing.JLabel loggedInUserLabel;
+    private javax.swing.JMenuItem logoutMenuItem;
+    // End of variables declaration//GEN-END:variables
 }

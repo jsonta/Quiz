@@ -3,8 +3,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.swing.*;
 
-public class Register extends JPanel implements ThreadCompleteListener {
-    public Register() {
+public class RegisterPanel extends JPanel implements ThreadCompleteListener {
+    public RegisterPanel() {
         initComponents();
     }
 
