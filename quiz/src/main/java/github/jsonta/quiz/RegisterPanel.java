@@ -148,7 +148,7 @@ public class RegisterPanel extends JPanel implements ThreadCompleteListener {
             thread.addListener(this);
             thread.start();    
         } else {
-            JOptionPane.showMessageDialog(null, invalidField.toString(), "Komunikat", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this.getRootPane(), invalidField.toString(), "Komunikat", JOptionPane.ERROR_MESSAGE);
             uiControl(true);
         }
     }//GEN-LAST:event_requestRgstrBttnActionPerformed
@@ -230,7 +230,7 @@ public class RegisterPanel extends JPanel implements ThreadCompleteListener {
     @Override
     public void notifyOfThreadComplete(Thread t) {
         if (t.getName().equals("User register")) {
-            JOptionPane.showMessageDialog(null, this.thread.getStatus(), "Komunikat", JOptionPane.PLAIN_MESSAGE);
+            JOptionPane.showMessageDialog(this.getRootPane(), this.thread.getStatus(), "Komunikat", JOptionPane.PLAIN_MESSAGE);
             uiControl(true);
         }
     }

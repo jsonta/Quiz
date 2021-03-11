@@ -116,7 +116,7 @@ public class DeleteUserPanel extends JPanel implements ThreadCompleteListener, W
             thread.addListener(this);
             thread.start();
         } else {
-            JOptionPane.showMessageDialog(null, "Hasło musi składać się z co najmniej sześciu (6) znaków.", "Komunikat", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this.getRootPane(), "Hasło musi składać się z co najmniej sześciu (6) znaków.", "Komunikat", JOptionPane.ERROR_MESSAGE);
             uiControl(true);
         }
     }//GEN-LAST:event_deleteUserBttnActionPerformed
@@ -135,7 +135,7 @@ public class DeleteUserPanel extends JPanel implements ThreadCompleteListener, W
     public void notifyOfThreadComplete(Thread t) {
         if (t.getName().equals("User delete")) {
             boolean userDeleted = thread.isUserDeleted();
-            JOptionPane.showMessageDialog(null, thread.getStatus(), "Komunikat", JOptionPane.PLAIN_MESSAGE);
+            JOptionPane.showMessageDialog(this.getRootPane(), thread.getStatus(), "Komunikat", JOptionPane.PLAIN_MESSAGE);
             
             if (userDeleted)
                 loginObj.setLoggedIn(false);
