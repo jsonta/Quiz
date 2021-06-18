@@ -45,13 +45,13 @@ public class DeleteUserThread extends NotifyingThread {
                 conn.connect();
                 if (conn.getResponseCode() == 200) {
                     BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
-                    jsonRsp = new JSONObject(br.readLine());
-                    status = jsonRsp.getString("Message");
+                    jsonRsp = new JSONObject(br.readLine()).getJSONObject("messages");
+                    status = jsonRsp.getString("message");
                     userDeleted = true;
                 } else {
                     BufferedReader br = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "utf-8"));
-                    jsonRsp = new JSONObject(br.readLine());
-                    status = jsonRsp.getString("Error");
+                    jsonRsp = new JSONObject(br.readLine()).getJSONObject("messages");
+                    status = jsonRsp.getString("error");
                     userDeleted = false;
                 }
             } catch (IOException ex) {

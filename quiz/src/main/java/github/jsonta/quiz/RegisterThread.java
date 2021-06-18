@@ -45,18 +45,18 @@ public class RegisterThread extends NotifyingThread {
             status = ex.toString();
         }
         
-        JSONObject jsonRsp;
         if (conn != null) {
             try {
+                JSONObject jsonRsp;
                 conn.connect();
                 if (conn.getResponseCode() == 201) {
                     BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
-                    jsonRsp = new JSONObject(br.readLine());
-                    status = jsonRsp.getString("Message");
+                    jsonRsp = new JSONObject(br.readLine()).getJSONObject("messages");
+                    status = jsonRsp.getString("message");
                 } else {
                     BufferedReader br = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "utf-8"));
-                    jsonRsp = new JSONObject(br.readLine());
-                    status = jsonRsp.getString("Error");
+                    jsonRsp = new JSONObject(br.readLine()).getJSONObject("messages");
+                    status = jsonRsp.getString("error");
                 }
             } catch (IOException ex) {
                 status = ex.toString();
