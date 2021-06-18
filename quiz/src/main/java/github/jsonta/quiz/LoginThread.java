@@ -44,13 +44,13 @@ public class LoginThread extends NotifyingThread {
                 conn.connect();
                 if (conn.getResponseCode() == 200) {
                     BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "utf-8"));
-                    jsonRsp = new JSONObject(br.readLine());
-                    token = jsonRsp.getString("Token");
+                    jsonRsp = new JSONObject(br.readLine()).getJSONObject("messages");
+                    token = jsonRsp.getString("token");
                     loggedIn = true;
                 } else {
                     BufferedReader br = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "utf-8"));
-                    jsonRsp = new JSONObject(br.readLine());
-                    status = jsonRsp.getString("Error");
+                    jsonRsp = new JSONObject(br.readLine()).getJSONObject("messages");
+                    status = jsonRsp.getString("error");
                     loggedIn = false;
                 }
             } catch (IOException ex) {
