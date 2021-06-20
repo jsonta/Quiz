@@ -34,6 +34,14 @@
             <Property name="text" type="java.lang.String" value="Konto"/>
           </Properties>
           <SubComponents>
+            <MenuItem class="javax.swing.JMenuItem" name="pwdChgMenuItem">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Zmie&#x144; has&#x142;o"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="pwdChgMenuItemActionPerformed"/>
+              </Events>
+            </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="delAccMenuItem">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Usu&#x144; konto"/>

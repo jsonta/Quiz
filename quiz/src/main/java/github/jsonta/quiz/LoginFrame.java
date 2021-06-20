@@ -24,7 +24,6 @@ public class LoginFrame extends JFrame implements ThreadCompleteListener {
         passwordField = new javax.swing.JPasswordField();
         loginButton = new javax.swing.JButton();
         signupButton = new javax.swing.JButton();
-        pwdRstButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quiz");
@@ -65,7 +64,6 @@ public class LoginFrame extends JFrame implements ThreadCompleteListener {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        loginButton.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         loginButton.setText("Zaloguj się");
         loginButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -80,13 +78,6 @@ public class LoginFrame extends JFrame implements ThreadCompleteListener {
             }
         });
 
-        pwdRstButton.setText("Reset hasła");
-        pwdRstButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                pwdRstButtonActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -96,11 +87,9 @@ public class LoginFrame extends JFrame implements ThreadCompleteListener {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(signupButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pwdRstButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addComponent(loginButton, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(signupButton, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -110,10 +99,7 @@ public class LoginFrame extends JFrame implements ThreadCompleteListener {
                 .addComponent(jPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(signupButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(pwdRstButton))
+                    .addComponent(signupButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(loginButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -162,15 +148,6 @@ public class LoginFrame extends JFrame implements ThreadCompleteListener {
         rgstrDialog.setVisible(true);
     }//GEN-LAST:event_signupButtonActionPerformed
 
-    private void pwdRstButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pwdRstButtonActionPerformed
-        JDialog pwdRstDialog = new JDialog(this, "Resetowanie hasła", true);
-        PasswdResetPanel pwdRstPanel = new PasswdResetPanel();
-        pwdRstDialog.getContentPane().add(pwdRstPanel);
-        pwdRstDialog.pack();
-        pwdRstDialog.addWindowListener(pwdRstPanel);
-        pwdRstDialog.setVisible(true);
-    }//GEN-LAST:event_pwdRstButtonActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -189,7 +166,6 @@ public class LoginFrame extends JFrame implements ThreadCompleteListener {
         emailTextField.setEnabled(flip);
         passwordField.setEnabled(flip);
         loginButton.setEnabled(flip);
-        pwdRstButton.setEnabled(flip);
         signupButton.setEnabled(flip);
     }
     
@@ -220,7 +196,6 @@ public class LoginFrame extends JFrame implements ThreadCompleteListener {
     private javax.swing.JPanel jPanel;
     private javax.swing.JButton loginButton;
     private javax.swing.JPasswordField passwordField;
-    private javax.swing.JButton pwdRstButton;
     private javax.swing.JButton signupButton;
     // End of variables declaration//GEN-END:variables
 }

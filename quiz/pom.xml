@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>github.jsonta</groupId>
     <artifactId>quiz</artifactId>
-    <version>0.1.3</version>
+    <version>20062021-dev</version>
     <packaging>jar</packaging>
     <build>
         <plugins>
@@ -23,6 +23,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-jar-plugin</artifactId>
+                <version>3.2.0</version>
                 <configuration>
                     <archive>
                         <manifest>
@@ -45,7 +46,7 @@
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-            <version>20201115</version>
+            <version>20210307</version>
         </dependency>
     </dependencies>
 </project>
