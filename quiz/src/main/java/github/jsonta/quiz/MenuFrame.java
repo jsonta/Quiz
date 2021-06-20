@@ -25,6 +25,7 @@ public class MenuFrame extends JFrame implements WindowListener {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         exitMenuItem = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        pwdChgMenuItem = new javax.swing.JMenuItem();
         delAccMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -58,6 +59,14 @@ public class MenuFrame extends JFrame implements WindowListener {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Konto");
+
+        pwdChgMenuItem.setText("Zmień hasło");
+        pwdChgMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pwdChgMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu2.add(pwdChgMenuItem);
 
         delAccMenuItem.setText("Usuń konto");
         delAccMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -113,6 +122,16 @@ public class MenuFrame extends JFrame implements WindowListener {
         delUserDialog.setVisible(true);
     }//GEN-LAST:event_delAccMenuItemActionPerformed
 
+    private void pwdChgMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pwdChgMenuItemActionPerformed
+        JDialog pwdChgDialog = new JDialog(this, "Zmiana hasła", true);
+        PasswdChangePanel pwdChgPanel = new PasswdChangePanel();
+        pwdChgPanel.setLoginObj(loginObj);
+        pwdChgDialog.getContentPane().add(pwdChgPanel);
+        pwdChgDialog.pack();
+        pwdChgDialog.addWindowListener(pwdChgPanel);
+        pwdChgDialog.setVisible(true);
+    }//GEN-LAST:event_pwdChgMenuItemActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -163,5 +182,6 @@ public class MenuFrame extends JFrame implements WindowListener {
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JLabel loggedInUserLabel;
     private javax.swing.JMenuItem logoutMenuItem;
+    private javax.swing.JMenuItem pwdChgMenuItem;
     // End of variables declaration//GEN-END:variables
 }
