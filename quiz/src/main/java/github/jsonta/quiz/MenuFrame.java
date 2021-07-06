@@ -25,6 +25,7 @@ public class MenuFrame extends JFrame implements WindowListener {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         exitMenuItem = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
+        emailChgMenuItem = new javax.swing.JMenuItem();
         pwdChgMenuItem = new javax.swing.JMenuItem();
         delAccMenuItem = new javax.swing.JMenuItem();
 
@@ -59,6 +60,14 @@ public class MenuFrame extends JFrame implements WindowListener {
         jMenuBar1.add(jMenu1);
 
         jMenu2.setText("Konto");
+
+        emailChgMenuItem.setText("Zmień adres e-mail");
+        emailChgMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                emailChgMenuItemActionPerformed(evt);
+            }
+        });
+        jMenu2.add(emailChgMenuItem);
 
         pwdChgMenuItem.setText("Zmień hasło");
         pwdChgMenuItem.addActionListener(new java.awt.event.ActionListener() {
@@ -132,6 +141,16 @@ public class MenuFrame extends JFrame implements WindowListener {
         pwdChgDialog.setVisible(true);
     }//GEN-LAST:event_pwdChgMenuItemActionPerformed
 
+    private void emailChgMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailChgMenuItemActionPerformed
+        JDialog emailChgDialog = new JDialog(this, "Zmiana adresu e-mail", true);
+        EmailChangePanel emailChgPanel = new EmailChangePanel();
+        emailChgPanel.setLoginObj(loginObj);
+        emailChgDialog.getContentPane().add(emailChgPanel);
+        emailChgDialog.pack();
+        emailChgDialog.addWindowListener(emailChgPanel);
+        emailChgDialog.setVisible(true);
+    }//GEN-LAST:event_emailChgMenuItemActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -174,6 +193,7 @@ public class MenuFrame extends JFrame implements WindowListener {
     private Login loginObj;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem delAccMenuItem;
+    private javax.swing.JMenuItem emailChgMenuItem;
     private javax.swing.JMenuItem exitMenuItem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
