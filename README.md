@@ -1,4 +1,5 @@
 # Quiz (Java GUI App)
+**Notice: The author of the API this app interacts with has declared that he will stop supporting it from July 10th, 2021 onwards. The future of this particular project is unknown. Majority of the API's new functionality has been not implemented yet. They might be implemented in the near future, or the development of this app itself may also be halted as well.**
 #### Overview
 This application is a graphical user interface for interaction with the [Learn and test knowledge API](https://learnandtest.herokuapp.com/api-docs/). The version number of this app corresponds to the version of that API at the moment of implementation. As of March 11th, 2021, it is version **0.1.3**. If the current API's version is any higher than that, then this app is outdated and may not make use of the updated API. 
 #### Running the app
